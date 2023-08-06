@@ -54,10 +54,21 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
  * Invoke the "hello" method from the example snap.
  */
 
-export const sendHello = async () => {
+export const sendEther = async () => {
+  const accounts = (await window.ethereum.request({
+    method: 'eth_requestAccounts',
+  })) as string[];
+
   await window.ethereum.request({
-    method: 'wallet_invokeSnap',
-    params: { snapId: defaultSnapOrigin, request: { method: 'hello' } },
+    method: 'eth_sendTransaction',
+    // The following sends an EIP-1559 transaction. Legacy transactions are also supported.
+    params: [
+      {
+        from: accounts[0], // The user's active address.
+        to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+        value: '1',
+      },
+    ],
   });
 };
 

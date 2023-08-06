@@ -4,14 +4,14 @@ import { MetamaskActions, MetaMaskContext } from '../hooks';
 import {
   connectSnap,
   getSnap,
-  sendHello,
+  sendEther,
   shouldDisplayReconnectButton,
 } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  SendHelloButton,
+  SendEtherButton,
   Card,
 } from '../components';
 
@@ -117,9 +117,9 @@ const Index = () => {
     }
   };
 
-  const handleSendHelloClick = async () => {
+  const handleSendEtherClick = async () => {
     try {
-      await sendHello();
+      await sendEther();
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });
@@ -185,12 +185,12 @@ const Index = () => {
         )}
         <Card
           content={{
-            title: 'Send Hello message',
+            title: 'Send Ether',
             description:
-              'Display a custom message within a confirmation screen in MetaMask.',
+              'Display the ENS of the address that user is sending funds to',
             button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
+              <SendEtherButton
+                onClick={handleSendEtherClick}
                 disabled={!state.installedSnap}
               />
             ),

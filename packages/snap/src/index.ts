@@ -1,43 +1,75 @@
 import { OnTransactionHandler } from '@metamask/snaps-types';
-import { heading, panel, text } from '@metamask/snaps-ui';
+import { panel, text } from '@metamask/snaps-ui';
+import { getAddressDetails } from './api';
 
-declare let window: any;
+// declare let window: any;
 
 // Handle outgoing transactions.
-export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
-  // Use the window.ethereum global provider to fetch the gas price.
-  const currentGasPrice = await window.ethereum.request({
-    method: 'eth_gasPrice',
+export const onTransaction: OnTransactionHandler = async ({
+  transaction,
+  chainId,
+}) => {
+  const details = [];
+
+  // Get receiver address details.
+  const addressDetails = await getAddressDetails(
+    chainId,
+    transaction.to as `0x${string}`,
+    transaction.data?.toString(),
+  );
+
+  // Transaction Count
+  if (Number(addressDetails.transactionCount) === 0) {
+    details.push(
+      text(
+        `⚠️ Receiver seems to be receiving their first transaction. Make sure you are sending funds to the right address.`,
+      ),
+    );
+  }
+
+  // Gnosis Safe
+  if (addressDetails.isGnosisSafe) {
+    details.push(text(`✅ Receiver is a Gnosis Safe address.`));
+  }
+  // Contract
+  else if (addressDetails.isContract) {
+    details.push(
+      text(
+        `⚠️ Receiver is a smart contract address. Make sure you are sending funds to the right address.`,
+      ),
+    );
+  }
+
+  // ================================
+  // Receiver Details
+  // ================================
+  // Lens
+  addressDetails.lens?.items?.forEach((lens: any) => {
+    details.push(text(`Lens Profile: ${lens.name} (${lens.handle})`));
   });
 
-  // Get fields from the transaction object.
-  const transactionGas = parseInt(transaction.gas as string, 16);
-  const currentGasPriceInWei = parseInt(currentGasPrice ?? '', 16);
-  const maxFeePerGasInWei = parseInt(transaction.maxFeePerGas as string, 16);
-  const maxPriorityFeePerGasInWei = parseInt(
-    transaction.maxPriorityFeePerGas as string,
-    16,
-  );
+  // Ens
+  const ens = addressDetails.ensName;
+  if (ens) {
+    details.push(text(`ENS: ${ens}`));
+  }
 
-  // Calculate gas fees the user would pay.
-  const gasFees = Math.min(
-    maxFeePerGasInWei * transactionGas,
-    (currentGasPriceInWei + maxPriorityFeePerGasInWei) * transactionGas,
-  );
+  // Ens
+  const { ud } = addressDetails;
+  if (ud) {
+    details.push(text(`Unstoppable Domain: ${ud}`));
+  }
 
-  // Calculate gas fees as percentage of transaction.
-  const transactionValueInWei = parseInt(transaction.value as string, 16);
-  const gasFeesPercentage = (gasFees / (gasFees + transactionValueInWei)) * 100;
+  // Address
+  let receiver = transaction.to;
+  if (addressDetails.erc20TransferDetails?.args?.length) {
+    receiver = addressDetails.erc20TransferDetails.args[0];
+
+    details.push(text(`Address: ${receiver}`));
+  }
 
   // Display percentage of gas fees in the transaction insights UI.
   return {
-    content: panel([
-      heading('Transaction insights snap'),
-      text(
-        `As set up, you are paying **${gasFeesPercentage.toFixed(
-          2,
-        )}%** in gas fees for this transaction.`,
-      ),
-    ]),
+    content: panel(details),
   };
 };
