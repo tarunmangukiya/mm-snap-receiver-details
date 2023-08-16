@@ -5,13 +5,16 @@ import {
   connectSnap,
   getSnap,
   sendEther,
+  sendGnosis,
+  sendNew,
+  sendUSDC,
   shouldDisplayReconnectButton,
 } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  SendEtherButton,
+  SendButton,
   Card,
 } from '../components';
 
@@ -126,13 +129,42 @@ const Index = () => {
     }
   };
 
+  const handleSendUSDCClick = async () => {
+    try {
+      await sendUSDC();
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleSendGnosisClick = async () => {
+    try {
+      await sendGnosis();
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleSendNewClick = async () => {
+    try {
+      await sendNew();
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
   return (
     <Container>
       <Heading>
-        Welcome to <Span>template-snap</Span>
+        Welcome to <Span>Receiver Snap</Span>
       </Heading>
-      <Subtitle>
-        Get started by editing <code>src/index.ts</code>
+      <Subtitle style={{ maxWidth: '600px', textAlign: 'center' }}>
+        Get to know transaction like <Span>ENS</Span>, <Span>Lens</Span>,
+        receiver is a <Span>contract</Span> or an address, or it's valid address
+        before sending transaction.
       </Subtitle>
       <CardContainer>
         {state.error && (
@@ -185,22 +217,66 @@ const Index = () => {
         )}
         <Card
           content={{
-            title: 'Send Ether',
+            title: 'Send Ether to tarunm.eth',
             description:
-              'Display the ENS of the address that user is sending funds to',
+              'Display the ENS & Lens of the address that user is sending funds to',
             button: (
-              <SendEtherButton
+              <SendButton
                 onClick={handleSendEtherClick}
                 disabled={!state.installedSnap}
-              />
+              >
+                Send Ether
+              </SendButton>
             ),
           }}
           disabled={!state.installedSnap}
-          fullWidth={
-            state.isFlask &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
-          }
+        />
+        <Card
+          content={{
+            title: 'Send USDC to tarunm.eth',
+            description:
+              'Display the ENS & Lens of the address that user is sending funds to',
+            button: (
+              <SendButton
+                onClick={handleSendUSDCClick}
+                disabled={!state.installedSnap}
+              >
+                Send USDC
+              </SendButton>
+            ),
+          }}
+          disabled={!state.installedSnap}
+        />
+        <Card
+          content={{
+            title: 'Send funds to Gnosis Safe',
+            description:
+              'Show users that they are sending funds a valid gnosis safe',
+            button: (
+              <SendButton
+                onClick={handleSendGnosisClick}
+                disabled={!state.installedSnap}
+              >
+                Send to Gnosis Safe
+              </SendButton>
+            ),
+          }}
+          disabled={!state.installedSnap}
+        />
+        <Card
+          content={{
+            title: 'Send funds to a new address',
+            description: 'Warn users that they are sending funds a new address',
+            button: (
+              <SendButton
+                onClick={handleSendNewClick}
+                disabled={!state.installedSnap}
+              >
+                Send
+              </SendButton>
+            ),
+          }}
+          disabled={!state.installedSnap}
         />
         <Notice>
           <p>

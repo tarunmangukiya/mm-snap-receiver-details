@@ -51,7 +51,7 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
 };
 
 /**
- * Invoke the "hello" method from the example snap.
+ * Invoke send ether function
  */
 
 export const sendEther = async () => {
@@ -65,8 +65,76 @@ export const sendEther = async () => {
     params: [
       {
         from: accounts[0], // The user's active address.
-        to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-        value: '1',
+        to: '0x796fC6401705Ce6358196fCDF20C7d9F6a0eD8f8',
+        value: '10000000000000000',
+      },
+    ],
+  });
+};
+
+/**
+ * Invoke send USDC function
+ */
+
+export const sendUSDC = async () => {
+  const accounts = (await window.ethereum.request({
+    method: 'eth_requestAccounts',
+  })) as string[];
+
+  await window.ethereum.request({
+    method: 'eth_sendTransaction',
+    // The following sends an EIP-1559 transaction. Legacy transactions are also supported.
+    params: [
+      {
+        from: accounts[0], // The user's active address.
+        to: '0x796fC6401705Ce6358196fCDF20C7d9F6a0eD8f8',
+        value: '0',
+        input:
+          '0xa9059cbb000000000000000000000000796fc6401705ce6358196fcdf20c7d9f6a0ed8f800000000000000000000000000000000000000000000000000000000000f4240',
+      },
+    ],
+  });
+};
+
+/**
+ * Invoke send to a new wallet
+ */
+
+export const sendNew = async () => {
+  const accounts = (await window.ethereum.request({
+    method: 'eth_requestAccounts',
+  })) as string[];
+
+  await window.ethereum.request({
+    method: 'eth_sendTransaction',
+    // The following sends an EIP-1559 transaction. Legacy transactions are also supported.
+    params: [
+      {
+        from: accounts[0], // The user's active address.
+        to: '0x5E7C619151570c0D708d959aebd02F8250117152',
+        value: '0',
+        input:
+          '0xa9059cbb000000000000000000000000796fc6401705ce6358196fcdf20c7d9f6a0ed8f800000000000000000000000000000000000000000000000000000000000f4240',
+      },
+    ],
+  });
+};
+
+export const sendGnosis = async () => {
+  const accounts = (await window.ethereum.request({
+    method: 'eth_requestAccounts',
+  })) as string[];
+
+  await window.ethereum.request({
+    method: 'eth_sendTransaction',
+    // The following sends an EIP-1559 transaction. Legacy transactions are also supported.
+    params: [
+      {
+        from: accounts[0], // The user's active address.
+        to: '0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe',
+        value: '0',
+        input:
+          '0xa9059cbb000000000000000000000000796fc6401705ce6358196fcdf20c7d9f6a0ed8f800000000000000000000000000000000000000000000000000000000000f4240',
       },
     ],
   });

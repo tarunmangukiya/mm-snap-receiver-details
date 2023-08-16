@@ -94,8 +94,8 @@ export const ReconnectButton = (props: ComponentProps<typeof Button>) => {
   );
 };
 
-export const SendEtherButton = (props: ComponentProps<typeof Button>) => {
-  return <Button {...props}>Send Ether</Button>;
+export const SendButton = (props: ComponentProps<typeof Button>) => {
+  return <Button {...props}>{props.children}</Button>;
 };
 
 export const HeaderButtons = ({
