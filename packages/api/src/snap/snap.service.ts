@@ -10,7 +10,7 @@ import {
 import { decodeFunctionData } from 'viem';
 import ERC20Abi from './abi/ERC20';
 import { isEmpty, keyBy } from 'lodash';
-import Resolution from '@unstoppabledomains/resolution';
+// import Resolution from '@unstoppabledomains/resolution';
 import SafeL2 from './abi/SafeL2';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -25,7 +25,7 @@ const chainIdToChain = keyBy(chains, 'id');
 export class SnapService {
   private readonly publicEthereumClient: PublicClient;
   private readonly lensClient: LensClient;
-  private readonly udClient: Resolution;
+  // private readonly udClient: Resolution;
 
   constructor() {
     this.publicEthereumClient = createPublicClient({
@@ -37,22 +37,22 @@ export class SnapService {
       environment: production,
     });
 
-    this.udClient = new Resolution({
-      sourceConfig: {
-        uns: {
-          locations: {
-            Layer1: {
-              url: chains.mainnet.rpcUrls.public.http[0],
-              network: 'mainnet',
-            },
-            Layer2: {
-              url: chains.polygon.rpcUrls.public.http[0],
-              network: 'polygon-mainnet',
-            },
-          },
-        },
-      },
-    });
+    // this.udClient = new Resolution({
+    //   sourceConfig: {
+    //     uns: {
+    //       locations: {
+    //         Layer1: {
+    //           url: chains.mainnet.rpcUrls.public.http[0],
+    //           network: 'mainnet',
+    //         },
+    //         Layer2: {
+    //           url: chains.polygon.rpcUrls.public.http[0],
+    //           network: 'polygon-mainnet',
+    //         },
+    //       },
+    //     },
+    //   },
+    // });
   }
 
   getEnsName(address: `0x${string}`): Promise<string | null> {
@@ -70,7 +70,8 @@ export class SnapService {
   }
 
   getUD(address: `0x${string}`): Promise<string | null> {
-    return this.udClient.reverse(address);
+    return null;
+    // return this.udClient.reverse(address);
   }
 
   getTransactionCount(address: `0x${string}`): Promise<number> {
