@@ -45,7 +45,7 @@ By running this command, there are 3 projects as mentioned above boots up.
 
 Now you can interact with snap from http://localhost:8000/ endpoint. This is how the site looks like:
 
-![MetaMask Receiver Details Snap](./screenshots/site.png "MetaMask Receiver Details Snap")
+![MetaMask Receiver Details Snap](./packages/snap/screenshots/site.png "MetaMask Receiver Details Snap")
 
 ## Testing Snap
 
@@ -54,7 +54,7 @@ Now you can interact with snap from http://localhost:8000/ endpoint. This is how
 
 Once you open up [snap website](http://localhost:8000/) in browser as shown in above step, you need to click on `Connect`. This will ask you to install Receiver Details Snap in your MetaMask. Click on `Connect` and `Install` as shown in below given screenshots.
 
-![Install Snap](./screenshots/snap-install.png "Install Snap")
+![Install Snap](./packages/snap/screenshots/snap-install.png "Install Snap")
 
 ### Use Snap
 
@@ -68,7 +68,7 @@ eth`.
 - Click "Send to Gnosis Safe" button and you will see that the you can safely send funds to this address as it is Gnosis Safe.
 - Click "Send" button and the snap will give you a warning to check address as it's `a new address`. We decide this by checking addresses' transactions count.
 
-![Use Snap](./screenshots/preview.png "Use Snap")
+![Use Snap](./packages/snap/screenshots/preview.png "Use Snap")
 
 ## Future Roadmap
 
