@@ -1,4 +1,5 @@
 const through = require('through2');
+const envify = require('envify/custom');
 
 module.exports = {
   cliOptions: {
@@ -20,5 +21,7 @@ module.exports = {
         },
       );
     });
+
+    bundler.transform(envify(process.env));
   },
 };

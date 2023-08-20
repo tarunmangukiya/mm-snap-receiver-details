@@ -14,15 +14,15 @@
     "snap.manifest.json"
   ],
   "scripts": {
-    "build": "mm-snap build",
+    "build": "dotenv -e .env.production mm-snap build",
     "build:clean": "yarn clean && yarn build",
     "clean": "rimraf dist",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
-    "serve": "mm-snap serve",
-    "start": "mm-snap watch",
+    "serve": "dotenv mm-snap serve",
+    "start": "dotenv mm-snap watch",
     "test": "jest"
   },
   "dependencies": {
@@ -31,6 +31,9 @@
     "@types/hex2dec": "^1.1.2",
     "@unstoppabledomains/resolution": "^9.1.0",
     "buffer": "^6.0.3",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
+    "envify": "^4.1.0",
     "hex2dec": "^1.1.2",
     "isomorphic-fetch": "^3.0.0"
   },
