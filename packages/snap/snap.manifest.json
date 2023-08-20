@@ -1,5 +1,5 @@
 {
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Get to know transaction like ENS, receiver is a contract or an address, or it's valid address before sending transaction.",
   "proposedName": "Receiver",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/tarunmangukiya/mm-snap-receiver-details.git"
   },
   "source": {
-    "shasum": "C25hU9Vpawe3lTZQYTeaMDTs9gcQ9TnMsMnUumrHtgo=",
+    "shasum": "NejIquD9EPJh0NgmgvXieTQpi6QPBn2h3WSwxJYJ7Ck=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
